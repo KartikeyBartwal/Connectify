@@ -50,7 +50,32 @@ const updateInfo = asyncHandler(async(req,res)=>{
     } catch (error) {
         res.status(500).json({error: `Server error occured: ${error}`});
     }
-    
+const getRandomUser = async () => {
+  const count = await User.countDocuments();
+  const randomIndex = Math.floor(Math.random() * count);
+  const randomUser = await User.findOne().skip(randomIndex);
+  return randomUser;
+};
+
+const countUsersByEmailDomain = async (domain) => {
+  const count = await User.countDocuments({ email: { $regex: `@${domain}$`, $options: "i" } });
+  return count;
+};
+
+// const testUserRoute = asyncHandler(async (req, res) => {
+//   res.json({ message: "This is a test route for demonstration purposes." });
+// });
+
+const generateDummyUser = () => {
+  return {
+    name: "John Doe",
+    email: `dummy${Math.floor(Math.random() * 1000)}@example.com`,
+    password: "password123",
+    bio: "This is a dummy bio.",
+  };
+};
+
+
     
 })
 module.exports = {getUsers, userInfo, updateInfo};
