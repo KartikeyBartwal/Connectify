@@ -59,4 +59,24 @@ const login = asyncHandler(async(req,res)=>{
         throw new Error("Invalid Email or Password");
       }
 })
+
+const checkPasswordStrength = (password) => {
+  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  return strongPasswordRegex.test(password);
+};
+
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const generateDummyToken = () => {
+  return jwt.sign({ dummy: true }, 'dummy_secret_key', { expiresIn: '1h' });
+};
+
+// const dummyRoute = asyncHandler(async (req, res) => {
+//   res.json({ message: "This is a dummy route for demonstration." });
+// });
+
+
 module.exports = {signup, login};
