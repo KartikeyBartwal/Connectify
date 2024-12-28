@@ -117,4 +117,47 @@ const viewStatus = asyncHandler(async(req,res)=>{
 
 })
 
-module.exports = { addStatus, fetchStatus , viewStatus};
+const countUserMediaFiles_status_js = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const userStatus = await Status.findOne({ userId }).lean();
+
+        if (!userStatus) {
+            return res.status(404).json({ message: "No status found for this user" });
+        }
+
+        const totalMediaCount = userStatus.media.length;
+        res.status(200).json({ userId, totalMediaCount });
+    } catch (error) {
+        res.status(500).json({ message: "Error counting media files", error });
+    }
+});
+
+const fetchViewedStatuses_status_js = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const viewedStatuses = await Status.find({
+            "viewedBy.viewerId": userId,
+        })
+            .populate("userId", "name profilePic")
+            .lean();
+
+        res.status(200).json({ viewedStatuses });
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching viewed statuses", error });
+    }
+});
+
+const removeExpiredStatuses_status_js = asyncHandler(async (req, res) => {
+    try {
+        const expirationTime = new Date(Date.now() - 24 * 60 * 60 * 1000); // 24 hours ago
+        const deletedStatuses = await Status.deleteMany({ createdAt: { $lt: expirationTime } });
+
+        res.status(200).json({ message: "Expired statuses removed", count: deletedStatuses.deletedCount });
+    } catch (error) {
+        res.status(500).json({ message: "Error removing expired statuses", error });
+    }
+});
+
+module.exports = { addStatus, fetchStatus , viewStatus, countUserMediaFiles_status_js, fetchViewedStatuses_status_js, removeExpiredStatuses_status_js};

@@ -62,7 +62,7 @@ const allMessages = asyncHandler(async(req,res)=>{
     }
 })
 
-const validateFields = (fields, res) => {
+const validateFields_message_js = (fields, res) => {
     for (const field in fields) {
         if (!fields[field]) {
             res.status(400).json({ error: `${field} is required` });
@@ -73,4 +73,4 @@ const validateFields = (fields, res) => {
 };
 
 
-module.exports = {sendMessage, allMessages, validateFiels}
+module.exports = {sendMessage, allMessages, validateFiels_message_js}
