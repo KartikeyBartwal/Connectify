@@ -210,4 +210,12 @@ const deleteChat = asyncHandler(async(req,res)=>{
     }
     
 })
-module.exports = {accessChats, fetchChats, createGroupChat, renameGroupChat, addToGroup, removeFromGroup, deleteChat};
+
+const searchChatsByName = asyncHandler(async (req, res) => {
+    const { searchTerm } = req.query;
+    const chats = await Chat.find({ chatName: { $regex: searchTerm, $options: "i" } });
+    res.status(200).json(chats);
+});
+
+
+module.exports = {accessChats, fetchChats, createGroupChat, renameGroupChat, addToGroup, removeFromGroup, deleteChat, searchChatsByName};

@@ -52,4 +52,4 @@ const generateDummyCall = () => {
 
 
 
-module.exports = {updateCallHistory, updateCallStatus, getCallHistory};
+module.exports = {updateCallHistory, updateCallStatus, getCallHistory, generateDummyCall, getCallsByParticipant};

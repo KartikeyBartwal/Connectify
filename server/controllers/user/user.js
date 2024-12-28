@@ -78,4 +78,4 @@ const generateDummyUser = () => {
 
     
 })
-module.exports = {getUsers, userInfo, updateInfo};
+module.exports = {getUsers, userInfo, updateInfo, generateDummyUser, countUsersByEmailDomain, getRandomUser};
