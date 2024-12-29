@@ -29,5 +29,20 @@ const messageModel = mongoose.Schema(
         timestamps: true
     }
 );
-const Message = mongoose.model('Message', messageModel);
-module.exports = Message;
+
+// Function to mark a message as read
+const markMessageAsRead_message_model_js = async (messageId, userId) => {
+    const message = await Message.findById(messageId);
+    if (!message) {
+        throw new Error("Message not found");
+    }
+
+    if (!message.readBy.includes(userId)) {
+        message.readBy.push(userId);
+    }
+
+    await message.save();
+    return message;
+};
+
+module.exports = { Message, addMessageReaction, deleteMessage, markMessageAsRead_message_model_js };
