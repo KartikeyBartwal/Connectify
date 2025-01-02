@@ -15,4 +15,20 @@ const dbConnection = async () => {
   }
 };
 
-module.exports = { dbConnection };
+const dbDisconnect = async () => {
+  try {
+    await mongoose.disconnect();
+    console.log('Database disconnected successfully');
+  } catch (error) {
+    console.error('Error disconnecting from the database:', error);
+  }
+};
+
+const dbStatus = () => {
+  const status = mongoose.connection.readyState;
+  const statuses = ['Disconnected', 'Connected', 'Connecting', 'Disconnecting'];
+  console.log(`Database connection status: ${statuses[status] || 'Unknown'}`);
+  return statuses[status] || 'Unknown';
+};
+
+module.exports = { dbConnection, dbDisconnect, dbStatus };
