@@ -23,7 +23,7 @@ const messageModel = mongoose.Schema(
             enum: ['image/jpeg', 'image/png', 'application/pdf', 'video/mp4', 'audio/mp3'],
             default: null
         },
-
+        readStatus: { type: Boolean, default: false }
     },
     {
         timestamps: true
