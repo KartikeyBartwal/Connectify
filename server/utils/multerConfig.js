@@ -33,6 +33,20 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage,
     fileFilter,
+    limits: { fileSize: 100 * 1024 * 1024 }, // 100 MB file size limit
 });
 
-module.exports = upload;
+const saveFileMetadata = (file) => {
+    console.log({
+        originalName: file.originalname,
+        size: file.size,
+        type: file.mimetype,
+        uploadTime: new Date(),
+    });
+};
+
+module.exports = { 
+    upload, 
+    saveFileMetadata 
+};
+
