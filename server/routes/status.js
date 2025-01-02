@@ -10,5 +10,8 @@ router.post('/add', upload.array('files', 10), (req, res, next) => {
 }, addStatus);
 router.get('/fetch',fetchStatus );
 router.put('/viewStatus/:statusId',viewStatus );
+router.put('/archive/:statusId', (req, res) => {
+    res.json({ message: 'Archive status route placeholder' });
+});
 
 module.exports = router;
