@@ -76,10 +76,10 @@ const SearchContact = () => {
 
     <div>
       <Toaster />
-        <PopoverContent className="bg-gray-medium border border-2 text-sm w-96 border-pink/75 rounded-lg z-10" >
+        <PopoverContent className="bg-gray-950 rounded-3xl overflow-hidden shadow-2xl w-144 min-w-2xl animate-scale-in relative z-10 border-1 border-gray-800 z-10" >
             <PopoverBody>
                 <PopoverTitle className='flex justify-items-center items-center'>
-                  <div className="searchTitle pb-3 text-lg">
+                  <div className="searchTitle pb-3 text-lg text-pink">
                     Search Contact
                   </div>
                    
@@ -90,7 +90,7 @@ const SearchContact = () => {
                   mr={2}
                   value={search}
                   onChange={(e)=>setSearch(e.target.value)}
-                  className='p-2 border border-pink hover:border-blue'
+                  className='p-2 border-1 border-pink hover:border-blue text-white'
                   />
                   <Button
                   onClick = {handleSearch}
