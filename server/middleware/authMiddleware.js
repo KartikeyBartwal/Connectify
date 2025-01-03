@@ -39,4 +39,24 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     }
 });
 
-module.exports = authMiddleware;
+const logRequestDetails = (req) => {
+    console.log({
+        method: req.method,
+        endpoint: req.originalUrl,
+        timestamp: new Date(),
+        userAgent: req.headers['user-agent'] || 'Unknown',
+    });
+};
+
+const checkTokenType = (token) => {
+    if (token.split('.')[0] === 'eyJhbGciOiJIUzI1NiJ9') {
+        console.log('Token appears to be of HS256 type');
+    }
+};
+
+module.exports = {
+    authMiddleware,
+    logRequestDetails, 
+    checkTokenType,    
+};
+
