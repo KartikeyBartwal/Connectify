@@ -12,6 +12,17 @@ const ENDPOINT = import.meta.env.VITE_API_URL;
 import { useRef } from 'react';
 
 const ChatArea = ({ refreshContact, setRefreshContact, setShowSettings }) => {
+  useEffect(() => {
+    if(selectedChat)
+    {
+      console.log(selectedChat);
+
+      console.log(selectedChat.picURL);
+
+    console.log(`${import.meta.env.VITE_API_URL}${(selectedChat.isGroupChat === true) ? selectedChat.picURL : selectedChat.users[1]._id== user._id?selectedChat.users[0].profilePic: selectedChat.users[1].profilePic}`); 
+
+    }
+  },)
   const { user, selectedChat, setSelectedChat } = useContext(ChatContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
