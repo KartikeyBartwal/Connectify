@@ -103,7 +103,7 @@ const SignUp = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Info updated successfully", result);
-        navigate("/"); // Redirect to homepage or appropriate page
+        navigate("/"); 
       } else {
         const error = await response.json();
         setErrorMessage(error.message || "Failed to update info");
