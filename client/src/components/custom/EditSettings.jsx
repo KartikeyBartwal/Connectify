@@ -63,6 +63,7 @@ const EditSettings = ({ onClose }) => {
         const result = await response.json();
         console.log("Info updated successfully", result);
         setUser(result.user);
+        window.location.reload();
       } else {
         const error = await response.json();
         setErrorMessage(error.message || "Failed to update info");
@@ -74,7 +75,7 @@ const EditSettings = ({ onClose }) => {
 
   return (
     <div>
-      <PopoverContent className="bg-gray-950 rounded-3xl overflow-hidden shadow-2xl w-96 min-w-2xl animate-scale-in relative z-10 border-1 border-gray-800">
+      <PopoverContent className="bg-gray-900 rounded-3xl overflow-hidden shadow-2xl w-96 min-w-2xl animate-scale-in relative z-10 border-1 border-gray-800">
         <PopoverBody>
           <div>
             <div className="p-6 border-b border-gray-800/50 relative">
@@ -121,7 +122,7 @@ const EditSettings = ({ onClose }) => {
                       onChange={handleChange}
                       type="text"
                       placeholder="Enter username..."
-                      className="w-full bg-gray-900 rounded-md text-white"
+                      className="w-full bg-gray-800 rounded-md px-3 text-white"
                     />
                   </div>
                   <div className="space-y-2">
@@ -131,7 +132,7 @@ const EditSettings = ({ onClose }) => {
                       value={userDetails.bio}
                       onChange={handleChange}
                       name="bio"
-                      className="w-full bg-gray-900/80 rounded-md text-white"
+                      className="w-full bg-gray-800/80 px-3 py-2 rounded-md text-white"
                     />
                   </div>
                 </div>
