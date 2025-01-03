@@ -3,6 +3,8 @@ import { ChatContext } from '../../context/ChatProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faMessage, faPhoneVolume, faPodcast } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import SearchContact from './SearchContact';
+import { PopoverRoot , PopoverTrigger} from '../ui/popover';
 
 const Sidebar = () => {
   const { user } = useContext(ChatContext);
@@ -20,7 +22,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="h-full max-w-[16rem] lg:w-[16rem] flex flex-col border-r border-gray-800/70 bg-gradient-to-b from-gray-950/10 via-gray-800/10 to-purpleDark/5 overflow-y-auto">
+    <div className="h-screen max-w-[16rem] lg:w-[16rem] flex flex-col border-r border-gray-800/70 bg-gradient-to-b from-gray-950/10 via-gray-800/10 to-purpleDark/5 overflow-y-auto">
       {/* User Header */}
       <div className="p-4 flex flex-col items-center justify-center border-b border-gray-800/50">
         <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue via-pink to-blue p-1 shadow-lg shadow-blue/20">
@@ -56,9 +58,15 @@ const Sidebar = () => {
 
         {/* Buttons */}
         <div className="flex flex-col items-center w-full mt-10 space-y-5">
-          <button className="w-4/5 py-2 px-4 rounded-xl bg-gradient-to-r from-blue via-pinkNew to-purpleDark hover:from-blue hover:via-pink hover:to-purpleLight transition-all shadow-lg shadow-blue/20 text-white ">
-            New Chat
-          </button>
+          <PopoverRoot className="w-full" >
+            <PopoverTrigger className = "w-full">
+              <button className="w-4/5 py-2 px-4 rounded-xl bg-gradient-to-r from-blue via-pinkNew to-purpleDark hover:from-blue hover:via-pink hover:to-purpleLight transition-all shadow-lg shadow-blue/20 text-white ">
+               New Chat
+              </button>
+            </PopoverTrigger>
+            <SearchContact/>
+          </PopoverRoot>
+          
           <button className="w-4/5 py-2 px-4 rounded-xl bg-gray-800/30 hover:bg-gray-800/60 transition-all backdrop-blur-sm flex text-white items-center justify-center">
             <FontAwesomeIcon icon={faGear} />
             <Link className='no-underline' to={'/settings'}>
