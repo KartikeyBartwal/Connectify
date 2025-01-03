@@ -23,7 +23,7 @@ const NewGroupChat = () => {
     name: "",
     users:[],
     description:"",
-    picURL:""
+    picUrl:""
   });
   const {chats, setChats, setSelectedChat} = useContext(ChatContext);
   const [namesList, setNamesList] = useState([])
@@ -32,15 +32,24 @@ const NewGroupChat = () => {
   const [showInput, setShowInput] = useState(false);
   const [showSearchResult, setShowSearchResult] = useState(false);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value , files} = e.target;
+    if (name === "picUrl" && files.length > 0) {
+      const file = files[0];
+      setFormData((prev) => ({
+        ...prev,
+        [name]: file,
+      }));
+     
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
  
   const handleSearch = async (e) => {
-    console.log('function called');
+    // console.log('function called');
     
     e.preventDefault();
     if (!name) {
@@ -81,7 +90,8 @@ const NewGroupChat = () => {
     setShowInput(false);
     setShowSearchResult(false);
   };
-  const handleSubmit = async() =>{
+  const handleSubmit = async(e) =>{
+    e.preventDefault();
     if(!formData.name || !formData.users.length >2)
     {
       toaster.create({
@@ -108,9 +118,9 @@ const NewGroupChat = () => {
   
   return (
     <div>
-      <PopoverContent className = "bg-gray-950 rounded-3xl overflow-hidden shadow-2xl w-144 min-w-2xl animate-scale-in relative z-10 border border-gray-800  ">
+      <PopoverContent className = "bg-gray-950 rounded-3xl overflow-hidden shadow-2xl w-144 min-w-2xl animate-scale-in relative z-10 border-1 border-gray-800   text-gray-200 ">
         <PopoverBody>
-        {/* <form > */}
+        <form onSubmit={handleSubmit} >
           <div className="">
             {/* header */}
             <div className="p-6 border-b border-gray-800/50 relative ">
@@ -132,19 +142,23 @@ const NewGroupChat = () => {
                   <div className="flex justify-center">
                   <div className="w-24 h-24 rounded-2xl bg-gradient-to-r from-indigo-500 via-pink/50 to-blue p-0.5 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300">
                     <div className="w-full h-full rounded-2xl bg-gray-900 flex items-center justify-center backdrop-blur-xl">
+                      <input className='' name='picUrl' type='file' onChange={handleChange}>
+
+                      </input>
                       <FontAwesomeIcon icon={faCamera} className=" text-2xl text-gray-400 group-hover:text-pink-400 transition-colors"/>
+
                     </div>
                   </div>
                   </div>
                   {/* name upload here */}
                     <div className="space-y-2">
                     <label className="text-sm text-gray-400">Group Name</label>
-                    <Input value={formData.name} name='name' onChange={handleChange}  type="text" placeholder="Enter group name..." className="w-full bg-gray-900 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-pink/70 transition-all placeholder-gray-500 border border-gray-800 hover:border-pink/40"/>
+                    <Input value={formData.name} name='name' onChange={handleChange}  type="text" placeholder="Enter group name..." className="w-full bg-gray-900 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-pink/70 transition-all placeholder-gray-500 border-1 border-gray-800 hover:border-pink/40"/>
                   </div>
                   {/* group description */}
                   <div className="space-y-2">
                       <label className="text-sm text-gray-400">Description (Optional)</label>
-                      <textarea placeholder='Enter group description here!' value={formData.description} onChange={handleChange} name="description" id="group-description" className='w-full bg-gray-900/80 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-pink/50 transition-all  placeholder-gray-500 resize-none h-24 border border-gray-800/30 hover:border-pink/30 '></textarea>
+                      <textarea placeholder='Enter group description here!' value={formData.description} onChange={handleChange} name="description" id="group-description" className='w-full bg-gray-900/80 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-pink/50 transition-all  placeholder-gray-500 resize-none h-24 border-1 border-gray-800/30 hover:border-pink/30 '></textarea>
 
                   </div>
 
@@ -155,7 +169,7 @@ const NewGroupChat = () => {
                 <div className="flex flex-wrap gap-2">
                 {formData.users.length>0?(
                   formData.users.map((name, index)=>(
-                    <div key={index} className="bg-gray-900/80 rounded-full px-3 py-1 flex items-center space-x-2 border border-gray-800/30">
+                    <div key={index} className="bg-gray-900/80 rounded-full px-3 py-1 flex items-center space-x-2 border-1 border-gray-800/30">
                       <img src={name.profilePic} className='w-6 h-6 rounded-full transition-opacity duration-300 opacity-100' loading='lazy' alt="" />
                       <span>{name.name}</span>
                       <FontAwesomeIcon onClick={()=>removeName(name)} icon={faXmark} className="text-gray-400 hover:text-pink-400 transition-colors" />
@@ -165,7 +179,7 @@ const NewGroupChat = () => {
                   <div className=""></div>
                 )}
                 </div>
-                <button className='bg-gray-900/80 rounded-full px-3 py-1 flex items-center space-x-2 hover:bg-gray-800/80 transition-all duration-300 border border-gray-800/30 hover:border-pink/30 flex' onClick={(e)=>{
+                <button className='bg-gray-900/80 rounded-full px-3 py-1 flex items-center space-x-2 hover:bg-gray-800/80 transition-all duration-300 border-1 border-gray-800/30 hover:border-pink/30 flex' onClick={(e)=>{
                   e.preventDefault();
                   setShowInput(true);
                   }}>
@@ -177,9 +191,9 @@ const NewGroupChat = () => {
               </div>
               <div className="">
                   {showInput?(
-                    <div className="flex p-4 border  border-gray-800/50">
+                    <div className="flex p-4 border-1  border-gray-800/50">
                       <Input 
-                      className='border border-pink text-white'
+                      className='border-1 border-pink text-white'
                       value={name}
                       onChange={(e)=> setName(e.target.value)}
                       >
@@ -212,12 +226,12 @@ const NewGroupChat = () => {
           </div>
 
           
-          <button className="w-full bg-gradient-to-r from-[#3B82F6]/70 via-[#F472B6]/70 to-[#3B82F6]/70 text-white py-3 rounded-xl transition-all flex items-center justify-center space-x-2 hover:shadow-lg hover:shadow-pink/20" onClick={()=>handleSubmit()}>
+          <button type='submit' className="w-full bg-gradient-to-r from-[#3B82F6]/70 via-[#F472B6]/70 to-[#3B82F6]/70 text-white py-3 rounded-xl transition-all flex items-center justify-center space-x-2 hover:shadow-lg hover:shadow-pink/20" >
           <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>
             <span>Create Group</span>
           </button>
         
-          {/* </form> */}
+          </form>
         </PopoverBody>
       </PopoverContent>
        
