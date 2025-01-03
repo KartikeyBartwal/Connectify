@@ -26,7 +26,9 @@ const ChatSettings = ({setShowSettings, showSettings}) => {
     const {setSelectedChat, selectedChat, user, chats, setChats } = useContext(ChatContext);
 
     useEffect(() => {
-        console.log(user._id );
+        // console.log(user._id );
+        console.log("selected chat: ", selectedChat);
+        
         
         
     }, [selectedChat, showSettings, chats]); 
@@ -93,7 +95,7 @@ const ChatSettings = ({setShowSettings, showSettings}) => {
                                     }}
                                 >
                                     <img
-                                        src={`${import.meta.env.VITE_API_URL}${selectedChat.isGroupChat ? selectedChat.picUrl : selectedChat.users[1]._id== user._id?selectedChat.users[0].profilePic: selectedChat.users[1].profilePic}`}
+                                        src={`${import.meta.env.VITE_API_URL}${selectedChat.isGroupChat ? selectedChat.picURL : selectedChat.users[1]._id== user._id?selectedChat.users[0].profilePic: selectedChat.users[1].profilePic}`}
                                         className="w-full h-full object-cover rounded-xl"
                                     />
                                     {selectedChat.isGroupChat && (
@@ -228,7 +230,7 @@ const ChatSettings = ({setShowSettings, showSettings}) => {
                             {/* Danger Zone */}
                             {selectedChat.isGroupChat && (
                                 <div className="space-y-4 bg-gray-800/30 p-4 rounded-xl backdrop-blur-sm">
-                                    <div className="text-lg font-semibold text-red-500">Danger Zone</div>
+                                    <div className="text-lg font-semibold text-red">Danger Zone</div>
                                     <div className="flex space-x-3 text-sm">
                                         <button
                                             className="flex-1 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors text-white"
@@ -236,7 +238,7 @@ const ChatSettings = ({setShowSettings, showSettings}) => {
                                         >
                                             Leave Group
                                         </button>
-                                        <button className="flex-1 py-3 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors">
+                                        <button className="flex-1 py-3 rounded-xl bg-red/10 text-red hover:bg-red-500/20 transition-colors">
                                             Delete Group
                                         </button>
                                     </div>
